@@ -13,7 +13,7 @@ public class HomeView extends VerticalLayout {
     public HomeView() {
         add(
                 new H1("Hello! Home-View Here."),
-                new Anchor("admin", "Go to Admin Page")
+                new Anchor("admin/test", "Go to Admin Page")
         );
     }
 }
