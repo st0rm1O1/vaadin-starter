@@ -4,6 +4,7 @@ import com.github.st0rm1O1.backend.entity.Book;
 import com.github.st0rm1O1.backend.service.BookService;
 import com.github.st0rm1O1.common.ImplProvider;
 
+import com.github.st0rm1O1.frontend.page.fallback.NotFoundView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -24,8 +25,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
@@ -39,7 +39,27 @@ import java.util.*;
 @Route("admin")
 //@RolesAllowed("ADMIN")
 @AnonymousAllowed
-public class AdminView extends VerticalLayout {
+public class AdminView extends VerticalLayout implements HasDynamicTitle, HasUrlParameter<String> {
+
+    private String title = "";
+
+    @Override
+    public String getPageTitle() {
+        return title;
+    }
+
+    @Override
+    public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+        if (parameter != null) {
+            title = "Admin Panel #" + parameter;
+        } else {
+//            title = "Blog Home";
+            event.rerouteTo(NotFoundView.class);
+        }
+    }
+
+
+
 
     private final BookService service;
     private static List<Book> allBooks;
@@ -226,5 +246,4 @@ public class AdminView extends VerticalLayout {
         menu.addItem("Edit", event -> event.getItem().ifPresent(this::updateBookDialogContext));
         menu.addItem("Delete", event -> event.getItem().ifPresent(this::deleteBookDialogContext));
     }
-
 }
