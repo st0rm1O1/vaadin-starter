@@ -68,16 +68,17 @@ public class AdminView extends VerticalLayout implements HasDynamicTitle, HasUrl
     public AdminView(BookService service) {
         this.service = service;
         createGrid();
+        setSizeFull();
 
         HorizontalLayout header = new HorizontalLayout(new H1("Bookstore"), addButton());
         header.setJustifyContentMode(JustifyContentMode.BETWEEN);
         header.setAlignItems(Alignment.BASELINE);
-        header.setSizeFull();
+        header.setWidthFull();
 
         HorizontalLayout footer = new HorizontalLayout(updateButton(), deleteButton());
         footer.setJustifyContentMode(JustifyContentMode.END);
         footer.setAlignItems(Alignment.BASELINE);
-        footer.setSizeFull();
+        footer.setWidthFull();
 
         add(header, bookGrid, footer);
     }
